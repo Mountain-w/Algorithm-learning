@@ -95,7 +95,49 @@ def min_d_dp_3(matrix):
     print(dp[0])
 
 
+# ----------------------------------分割线---------------------------------------
+# 2.arr是货币数组，其中的值都是正数。再给定一个正数aim。
+# 每个值都认为是一张货币，
+# 即便是值相同的货币也认为每一张是不同的，
+# 返回组成aim的方法数
+# 例如： arr = [1, 1, 1], aim = 2
+# 第0个和第一个能组成2，第1个和第2个能组成2，第0个和第2个能组成2
+# 一共就三种方法，所以返回3
+
+@time_helper
+def findswas(arr, aim):
+    if not arr or aim < 0:
+        return 0
+    print('递归解：')
+    print(process2(arr, aim, 0))
+
+
+def process2(arr, rest, i):
+    if i == len(arr):
+        return 1 if rest == 0 else 0
+    # 要当前这个纸币
+    p1 = process2(arr, rest - arr[i], i + 1)
+    # 不要当前这个纸币
+    p2 = process2(arr, rest, i + 1)
+    return p1 + p2
+
+
+@time_helper
+def findways_dp(arr, aim):
+    print('动态规划：')
+    length = len(arr)
+    dp = [[0] * (aim + 1) for _ in range(length + 1)]
+    dp[length][0] = 1
+    for i in range(length - 1, -1, -1):
+        for j in range(aim + 1):
+            dp[i][j] = dp[i + 1][j]
+            if j - arr[i] >= 0:
+                dp[i][j] += dp[i + 1][j - arr[i]]
+    print(dp[0][aim])
+
+
 if __name__ == '__main__':
+    print('*' * 9, '第一题', '*' * 9)
     matrix = [
         [2, 3, 1, 5, 3],
         [5, 3, 9, 10, 3],
@@ -111,12 +153,8 @@ if __name__ == '__main__':
     min_d_dp_1(matrix)
     min_d_dp_2(matrix)
     min_d_dp_3(matrix)
-
-# ----------------------------------分割线---------------------------------------
-# 2.arr是货币数组，其中的值都是正数。再给定一个正数aim。
-# 每个值都认为是一张货币，
-# 即便是值相同的货币也认为每一张是不同的，
-# 返回组成aim的方法数
-# 例如： arr = [1, 1, 1], aim = 2
-# 第0个和第一个能组成2，第1个和第2个能组成2，第0个和第2个能组成2
-# 一共就三种方法，所以返回3
+    print('*' * 9, '第二题', '*' * 9)
+    arr = [1, 1, 0, 2, 4, 3, 2, 1, 1, 1, 1, 1]
+    aim = 5
+    findswas(arr, 2)
+    findways_dp(arr, 2)
