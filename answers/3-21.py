@@ -109,12 +109,12 @@ def min_dp2(arr, aim):
 
 
 if __name__ == '__main__':
-    # print('*' * 9, '第一题', '*' * 9)
-    # hp = 20
-    # hint = 4
-    # times = 8
-    # win(hp, hint, times)
-    # win_dp(hp, hint, times)
+    print('*' * 9, '第一题', '*' * 9)
+    hp = 20
+    hint = 4
+    times = 8
+    win(hp, hint, times)
+    win_dp(hp, hint, times)
     print('*' * 9, '第二题', '*' * 9)
     arr = [24, 2, 18, 1]
     aim = 300
